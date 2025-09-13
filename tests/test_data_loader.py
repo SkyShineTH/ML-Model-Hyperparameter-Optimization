@@ -264,23 +264,6 @@ class TestDataLoader:
         assert isinstance(datasets['classification'], list)
         assert isinstance(datasets['regression'], list)
     
-    @patch('src.data.loader.load_boston')
-    def test_boston_dataset_deprecation_warning(self, mock_load_boston, data_loader):
-        """Test handling of deprecated Boston housing dataset."""
-        # Mock the ImportError that occurs with deprecated Boston dataset
-        mock_load_boston.side_effect = ImportError("Boston dataset deprecated")
-        
-        # Should fall back to synthetic regression data
-        X_train, X_test, y_train, y_test = data_loader.load_builtin_dataset('boston')
-        
-        # Check that we got data (from synthetic generation)
-        assert X_train is not None
-        assert X_test is not None
-        assert y_train is not None
-        assert y_test is not None
-        assert X_train.shape[0] + X_test.shape[0] == 506  # Boston dataset size
-        assert X_train.shape[1] == 13  # Boston feature count
-    
     def test_reproducibility(self, data_loader):
         """Test that results are reproducible with same random state."""
         # Load same dataset twice

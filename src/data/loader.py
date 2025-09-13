@@ -312,12 +312,21 @@ class DataLoader:
         if y.dtype == 'object' or y.dtype.name == 'category':
             return True
         
+        # If numeric, check if it's integer-like (could be classification)
+        if np.issubdtype(y.dtype, np.floating):
+            # For float data, check if all values are actually integers
+            if not np.allclose(y, y.astype(int), equal_nan=True):
+                # Has decimal values, likely regression
+                return False
+        
         # If numeric, check number of unique values
         unique_values = y.nunique()
         total_values = len(y)
         
-        # Heuristic: if less than 10 unique values or less than 5% unique, treat as classification
-        if unique_values < 10 or (unique_values / total_values) < 0.05:
+        # More conservative heuristic: 
+        # - Less than 20 unique values AND less than 20% unique ratio
+        # - OR less than 10 unique values regardless of ratio
+        if (unique_values < 20 and (unique_values / total_values) < 0.2) or unique_values < 10:
             return True
         
         return False
