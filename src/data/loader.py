@@ -3,7 +3,7 @@ import numpy as np
 from typing import Tuple, Optional, Dict, Any, List
 from sklearn.datasets import (
     load_iris, load_wine, load_breast_cancer, load_digits,
-    load_boston, load_diabetes, make_classification, make_regression
+    load_diabetes, make_classification, make_regression
 )
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
@@ -21,7 +21,6 @@ class DataLoader:
     }
     
     REGRESSION_DATASETS = {
-        'boston': load_boston,
         'diabetes': load_diabetes
     }
     

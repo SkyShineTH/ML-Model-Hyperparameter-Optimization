@@ -26,8 +26,8 @@ TestResults.xml
 __pycache__/
 
 # Poetry specific files
-poetry.lock  # If you choose not to commit the lock file (though generally recommended to commit)
-.python-version # For pyenv or similar tools
+poetry.lock  
+.python-version 
 
 # Distribution archives
 dist/

@@ -12,7 +12,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.data.loader import DataLoader, load_iris_data, load_wine_data
 
-
 class TestDataLoader:
     """Test cases for DataLoader class."""
     
