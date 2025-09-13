@@ -1,3 +1,8 @@
+"""
+Model factory for creating and configuring ML models with hyperparameter spaces.
+Supports various algorithms including tree-based models, linear models, and ensemble methods.
+"""
+
 import numpy as np
 from typing import Dict, Any, Optional, List, Union, Tuple
 from abc import ABC, abstractmethod
@@ -366,6 +371,9 @@ class SVMConfig(BaseModelConfig):
         if self.task_type == 'classification':
             return SVC(**params)
         else:
+            # del parameter random_state because SVR don't want
+            if 'random_state' in params:
+                del params['random_state']
             return SVR(**params)
     
     def get_hyperparameter_space(self, optimization_framework: str = 'optuna') -> Dict[str, Any]:
@@ -435,6 +443,11 @@ class ModelFactory:
             available_models = list(self.MODEL_CONFIGS.keys())
             raise ValueError(f"Model '{model_name}' not available. "
                            f"Available models: {available_models}")
+        
+        # Validate task_type
+        if task_type not in ['classification', 'regression']:
+            raise ValueError(f"Invalid task_type '{task_type}'. "
+                           f"Must be 'classification' or 'regression'")
         
         config_class = self.MODEL_CONFIGS[model_name]
         
