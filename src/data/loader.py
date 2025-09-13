@@ -363,3 +363,21 @@ class DataLoader:
             'classification': list(self.CLASSIFICATION_DATASETS.keys()),
             'regression': list(self.REGRESSION_DATASETS.keys())
         }
+    
+# Convenience functions for quick data loading
+def load_iris_data(**kwargs):
+    """Quick loader for iris dataset."""
+    loader = DataLoader()
+    return loader.load_builtin_dataset('iris', **kwargs)
+
+
+def load_wine_data(**kwargs):
+    """Quick loader for wine dataset."""
+    loader = DataLoader()
+    return loader.load_builtin_dataset('wine', **kwargs)
+
+
+def load_breast_cancer_data(**kwargs):
+    """Quick loader for breast cancer dataset."""
+    loader = DataLoader()
+    return loader.load_builtin_dataset('breast_cancer', **kwargs)
